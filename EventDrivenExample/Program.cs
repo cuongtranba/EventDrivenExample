@@ -10,19 +10,36 @@ namespace EventDrivenExample
     {
         static void Main(string[] args)
         {
-            var student=new Student()
+            // when client sell product it will fire event to calculate product number in database 
+            
+            IProductService productService=new ProductService();
+            IManagerProduct managerProduct=new ManagerProduct();
+            var products=new List<Product>()
             {
-                GpaScore = 80,
-                Name = "Cuong"
+                new Product(1,"iphone 4",4),
+                new Product(2,"iphone 3",5),
+                new Product(3,"iphone 2",6),
+                new Product(4,"iphone 4",12),
+                new Product(5,"iphone 2",8),
+                new Product(6,"iphone 1",9),
             };
 
-            var parent =new Parent()
-            {
-                Name = "Hung"
-            };
 
-            student.NotifyToParent += parent.NotifyMe;
-            student.RecordGPAScore();
+            productService.Subscribe(managerProduct);
+            productService.SellProduct(products.Find(c => c.Id == 4));
+            //var student=new Student()
+            //{
+            //    GpaScore = 80,
+            //    Name = "Cuong"
+            //};
+
+            //var parent =new Parent()
+            //{
+            //    Name = "Hung"
+            //};
+
+            //student.NotifyToParent += parent.NotifyMe;
+            //student.RecordGPAScore();
         }
 
     }
